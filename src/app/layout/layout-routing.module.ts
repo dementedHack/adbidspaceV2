@@ -19,7 +19,9 @@ const routes: Routes = [
             { path: 'real-estate', loadChildren: './real-estate/real-estate.module#RealEstateModule' },
             { path: 'ads', loadChildren: './ads/ads.module#AdsModule' },
             { path: 'my-ads', loadChildren: './ads/my-ads/my-ads.module#MyAdsModule' },
-            { path: 'my-real-estate', loadChildren: './real-estate/my-real-estate/my-real-estate.module#MyRealEstateModule' }
+            { path: 'my-real-estate', loadChildren: './real-estate/my-real-estate/my-real-estate.module#MyRealEstateModule' },
+            { path: 'settings', loadChildren: './settings/settings.module#SettingsModule' },
+            { path: 'inbox', loadChildren: './inbox/inbox.module#InboxModule' }
         ]
     }
 ];

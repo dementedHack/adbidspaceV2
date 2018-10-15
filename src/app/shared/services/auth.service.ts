@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireDatabase } from 'angularfire2/database';
 import * as firebase from 'firebase/app';
 import { Observable, Subject } from 'rxjs';
 
@@ -10,9 +11,9 @@ export class AuthService {
 
   isLoggedIn = new Subject();
 
-  constructor(public angularFireAuth: AngularFireAuth) { }
+  constructor(public angularFireAuth: AngularFireAuth, public angularFireDatabase: AngularFireDatabase) { }
 
-  signup(email: string, password:string){
+  signupWithEmail(email: string, password:string){
     this.angularFireAuth
     .auth.createUserWithEmailAndPassword(email, password)
     .catch(function(error) {
@@ -29,10 +30,10 @@ export class AuthService {
   }
 
   emailLogin(email: string, password: string) {
-    return this.angularFireAuth.auth.signInWithEmailAndPassword(email, password)
+    this.angularFireAuth.auth.signInWithEmailAndPassword(email, password)
       .then((user) => {
-        //this.authState = user
-        console.log('Successfully signed in');
+        console.log(user);
+        this.getUserUID();
         localStorage.setItem('isLoggedin', 'true');
         this.isLoggedIn.next(true);
       })
@@ -45,15 +46,25 @@ export class AuthService {
   logout () {
     this.angularFireAuth.auth.signOut().then(function() {
         // Sign-out successful.
-        console.log("Logout successful");
-
-        localStorage.clear(); // This works but not recommended
+        localStorage.removeItem('uid'); // This works but not recommended
+        localStorage.removeItem('username'); // This works but not recommended
+        localStorage.removeItem('isLoggedIn'); // This works but not recommended
         //localStorage.removeItem("firebase:host:project-xxxxxxxxxx.firebaseio.com"); This is currently am doing in my project
-        this.isLoggedIn.next(false);
+        //this.isLoggedIn.next(false);
       }, function(error) {
         // An error happened.
         console.log(error);
 
       });
+  }
+
+  getUserUID() {
+    this.angularFireAuth.authState.subscribe(res => {
+      if (res && res.uid) {
+        localStorage.setItem('uid', res.uid);
+      } else {
+        console.log('user not logged in');
+      }
+    });
   }
 }

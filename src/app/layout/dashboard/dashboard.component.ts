@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../router.animations';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { AuthService } from '../../shared/services/auth.service';
+import { CRUDService } from '../../shared/services/CRUD.service';
 
 @Component({
     selector: 'app-dashboard',
@@ -11,7 +15,7 @@ export class DashboardComponent implements OnInit {
     public alerts: Array<any> = [];
     public sliders: Array<any> = [];
 
-    constructor() {
+    constructor(private authService: AuthService, private CRUDService: CRUDService) {
         this.sliders.push(
             {
                 imagePath: 'assets/images/slider1.jpg',
@@ -52,7 +56,11 @@ export class DashboardComponent implements OnInit {
         );
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+      // tells us if a user is logged in
+      this.authService.getUserUID();
+      this.CRUDService.getUserNameOfCurrentLoggedIn();
+    }
 
     public closeAlert(alert: any) {
         const index: number = this.alerts.indexOf(alert);

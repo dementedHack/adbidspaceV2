@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { AuthService } from '../../../shared/services/auth.service';
+import { CRUDService } from '../../../shared/services/crud.service';
+import * as firebase from 'firebase/app';
+import { Observable, Subject } from 'rxjs';
 
 @Component({
     selector: 'app-header',
@@ -9,8 +14,10 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class HeaderComponent implements OnInit {
     pushRightClass: string = 'push-right';
+    name = '';
 
-    constructor(private translate: TranslateService, public router: Router) {
+    constructor(private translate: TranslateService, public router: Router,
+                private authService: AuthService, private CRUDService: CRUDService) {
 
         this.translate.addLangs(['en', 'fr', 'ur', 'es', 'it', 'fa', 'de', 'zh-CHS']);
         this.translate.setDefaultLang('en');
@@ -28,7 +35,13 @@ export class HeaderComponent implements OnInit {
         });
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+      console.log('header instatiated');
+      if (this.name === '') {
+        this.name = localStorage.getItem('uid');
+      }
+      this.name = localStorage.getItem('uid');
+    }
 
     isToggled(): boolean {
         const dom: Element = document.querySelector('body');
@@ -46,7 +59,8 @@ export class HeaderComponent implements OnInit {
     }
 
     onLoggedout() {
-        localStorage.removeItem('isLoggedin');
+        this.authService.logout();
+        // localStorage.removeItem('isLoggedin');
     }
 
     changeLang(language: string) {

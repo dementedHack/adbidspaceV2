@@ -21,6 +21,11 @@ export class LoginComponent implements OnInit {
     constructor(public router: Router, private authService: AuthService) {}
 
     ngOnInit() {
+        // this.authService.isLoggedIn.subscribe(
+        // (isLoggedIn: boolean) => {
+        //   this.router.navigate(['/dashboard']);
+        //   }
+        // );
         this.user = new FormGroup({
         name: new FormControl(''),
         account: new FormGroup({
@@ -47,14 +52,7 @@ export class LoginComponent implements OnInit {
       // setTimeout(() =>{
       //
       // }, 100);
-      this.authService.isLoggedIn.subscribe(
-      (isLoggedIn: boolean) => {
-        this.router.navigate(['/dashboard']);
-        setTimeout(() =>{
-          this.router.navigate(['/dashboard']);
-        }, 100);
-      }
-    );
+
   }
 
     onLogout() {

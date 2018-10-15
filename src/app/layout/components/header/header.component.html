@@ -36,7 +36,7 @@
                             src="http://i.huffpost.com/gadgets/slideshows/461162/slide_461162_6224974_sq50.jpg" alt="Generic placeholder image"
                         >
                         <div class="media-body">
-                            <h5 class="mt-0 mb-1">John Smith</h5>
+                            <h5 class="mt-0 mb-1">{{ name }}</h5>
                             <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
                             <p class="last"> Lorem ipsum dolor sit amet, consectetur...</p>
                         </div>
@@ -117,17 +117,17 @@
                 </div>
             </li>
             <li class="nav-item dropdown" ngbDropdown>
-                <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
-                    <i class="fa fa-user"></i> John Smith <b class="caret"></b>
+                <a class="nav-link" ngbDropdownToggle>
+                    <i class="fa fa-user"></i> {{ name }} <b class="caret"></b>
                 </a>
                 <div class="dropdown-menu-right" ngbDropdownMenu>
                     <a class="dropdown-item" href="javascript:void(0)">
                         <i class="fa fa-fw fa-user"></i> {{ 'Profile' | translate }}
                     </a>
-                    <a class="dropdown-item" href="javascript:void(0)">
+                    <a class="dropdown-item" [routerLink]="['/inbox']">
                         <i class="fa fa-fw fa-envelope"></i> {{ 'Inbox' | translate }}
                     </a>
-                    <a class="dropdown-item" href="javascript:void(0)">
+                    <a class="dropdown-item" [routerLink]="['/settings']" [routerLinkActive]="['router-link-active']">
                         <i class="fa fa-fw fa-gear"></i> {{ 'Settings' | translate }}
                     </a>
                     <a class="dropdown-item" [routerLink]="['/login']" (click)="onLoggedout()">

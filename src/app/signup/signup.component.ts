@@ -36,7 +36,7 @@ export class SignupComponent implements OnInit {
           this.password = this.user.value.account.password;
           this.confirmPassword = this.user.value.account.confirmPassword;
           if (this.password === this.confirmPassword) {
-            this.authService.signup(this.email, this.password);
+            this.authService.signupWithEmail(this.email, this.password);
           } else {
             console.log('Not the same');
           }
